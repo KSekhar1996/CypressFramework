@@ -20,13 +20,37 @@ jobs:
           name: Mochawesome HTML Report
           path: cypress/reports/html 
 
+      # Summary of Cypress automation results
       - name: Simple job summary
         run: echo '### Cypress Automation Results!!! :rocket:' >> $GITHUB_STEP_SUMMARY
-      
-      - name: Generate a table of cypress test results
+        
+        # Parse the Cypress test reports and dynamically update the summary table
+      - name: Parse test report
+        id: parse-test-report
         run: |
-          echo "| Test Result :test_tube: | Passed :green_circle: | Failed :x: | Skipped | Time Duration :alarm_clock: |" >> $GITHUB_STEP_SUMMARY
-          echo "| ----------- | ------ | ------ | ------- | ------------- |" >> $GITHUB_STEP_SUMMARY
-          echo "| :green_circle: Pass | 122 | 0 | 3 | 12m 3s |" >> $GITHUB_STEP_SUMMARY
-          echo "| :x: Failed | 121 | 2 | 3 | 10m 3s |" >> $GITHUB_STEP_SUMMARY
-          echo "| :green_circle: Pass | 4 | 12 | 3 | 9m 4s |" >> $GITHUB_STEP_SUMMARY
+            # Initialize the counts for passed and failed tests
+            passed_tests=$(grep -i "Passed" cypress/reports/html/*.html | wc -l)
+            failed_tests=$(grep -i "Failed" cypress/reports/html/*.html | wc -l)
+            skipped_tests=$(grep -i "Skipped" cypress/reports/html/*.html | wc -l)
+
+            # Calculate total number of tests
+            total_tests=$((passed_tests + failed_tests + skipped_tests))
+            
+            # Calculate the success and failure rates
+            success_rate=$(( (passed_tests * 100) / total_tests ))
+            failure_rate=$(( (failed_tests * 100) / total_tests ))
+
+            # Output the results
+            echo "Total Tests: $total_tests"
+            echo "Passed Tests: $passed_tests"
+            echo "Failed Tests: $failed_tests"
+            echo "Skipped Tests: $skipped_tests"
+            echo "Success Rate: $success_rate%"
+            echo "Failure Rate: $failure_rate%"
+            
+            # Append test results to GitHub Actions step summary
+            echo "| Test Result :test_tube: | Passed :green_circle: | Failed :x: | Skipped | Time Duration :alarm_clock: |" >> $GITHUB_STEP_SUMMARY
+            echo "| ----------- | ------ | ------ | ------- | ------------- |" >> $GITHUB_STEP_SUMMARY
+            echo "| :green_circle: Pass | $passed_tests | 0 | $skipped_tests | N/A |" >> $GITHUB_STEP_SUMMARY
+            echo "| :x: Failed | $failed_tests | 0 | $skipped_tests | N/A |" >> $GITHUB_STEP_SUMMARY
+        
