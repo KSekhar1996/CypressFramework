@@ -1,0 +1,9 @@
+{
+  "login" : {
+      "username" : "test.qaautomation@gmail.com",
+      "password" : "Cypress@123"
+  },
+  "product" : {
+      "productName" : "MacBook"
+  }
+}

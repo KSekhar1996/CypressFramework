@@ -1,0 +1,23 @@
+{
+  "name": "cypress-framework",
+  "version": "1.0.0",
+  "description": "Cypress Automation Tests",
+  "main": "index.js",
+  "scripts": {
+    "cypress:run": "cypress run",
+    "cypress:open": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KSekhar1996/CypressFramework.git"
+  },
+  "author": "Sekhar Kasi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KSekhar1996/CypressFramework/issues"
+  },
+  "homepage": "https://github.com/KSekhar1996/CypressFramework#readme",
+  "devDependencies": {
+    "cypress": "^14.2.0"
+  }
+}

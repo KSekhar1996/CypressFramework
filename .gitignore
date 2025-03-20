@@ -1,0 +1,12 @@
+# Cypress generated files #
+/cypress/videos/
+/cypress/screenshots/
+/cypress/results/
+/cypress/exports/
+/cypress/reports/
+
+# Node.js related files #
+/node_modules/
+
+# Environment variables #
+.env
