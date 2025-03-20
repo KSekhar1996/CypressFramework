@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "cypress:run": "cypress run",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:smoke": "cypress run --env grepTags=@smoke --spec \"**/e2e/**/*\"",
+    "cypress:regression": "cypress run --env grepTags=@regression --spec \"**/e2e/**/*\""
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   },
   "homepage": "https://github.com/KSekhar1996/CypressFramework#readme",
   "devDependencies": {
+    "@cypress/grep": "^4.1.0",
     "cypress": "^14.2.0",
     "cypress-mochawesome-reporter": "^3.8.2"
   }
