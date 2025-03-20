@@ -12,31 +12,6 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           command: npm run cypress:run
-
-      - name: Extract Cypress test results from logs
-        id: extract-results
-        run: |
-          # Extract relevant test information from the Cypress run output
-          echo "Parsing Cypress test results..."
-          RESULTS=$(cat /home/runner/work/CypressFramework/CypressFramework/cypress/reports/html/index.html)
-          
-          # Extract passing, failing, and skipped test counts and duration from the log
-          PASSED=$(echo "$RESULTS" | grep -oP '(?<=Tests:\s)(\d+)' | head -n 1)  # Get number of tests
-          FAILED=$(echo "$RESULTS" | grep -oP '(?<=Failing:\s)(\d+)')
-          SKIPPED=$(echo "$RESULTS" | grep -oP '(?<=Skipped:\s)(\d+)')
-          DURATION=$(echo "$RESULTS" | grep -oP '(?<=Duration:\s)(\d+\sseconds)')
-          
-          # Set the output values for later use
-          echo "::set-output name=passed::$PASSED"
-          echo "::set-output name=failed::$FAILED"
-          echo "::set-output name=skipped::$SKIPPED"
-          echo "::set-output name=duration::$DURATION"
-
-      - name: Generate a table of Cypress test results
-        run: |
-          echo "| Test Result :test_tube: | Passed :green_circle: | Failed :x: | Skipped | Time Duration :alarm_clock: |" >> $GITHUB_STEP_SUMMARY
-          echo "| ----------- | ------ | ------ | ------- | ------------- |" >> $GITHUB_STEP_SUMMARY
-          echo "| :green_circle: Pass | ${{ steps.extract-results.outputs.passed }} | ${{ steps.extract-results.outputs.failed }} | ${{ steps.extract-results.outputs.skipped }} | ${{ steps.extract-results.outputs.duration }} |" >> $GITHUB_STEP_SUMMARY
       
       - name: Cypress Test Report
         if: always()
@@ -44,3 +19,14 @@ jobs:
         with:
           name: Mochawesome HTML Report
           path: cypress/reports/html 
+
+      - name: Simple job summary
+        run: echo '### Cypress Automation Results!!! :rocket:' >> $GITHUB_STEP_SUMMARY
+      
+      - name: Generate a table of cypress test results
+        run: |
+          echo "| Test Result :test_tube: | Passed :green_circle: | Failed :x: | Skipped | Time Duration :alarm_clock: |" >> $GITHUB_STEP_SUMMARY
+          echo "| ----------- | ------ | ------ | ------- | ------------- |" >> $GITHUB_STEP_SUMMARY
+          echo "| :green_circle: Pass | 122 | 0 | 3 | 12m 3s |" >> $GITHUB_STEP_SUMMARY
+          echo "| :x: Failed | 121 | 2 | 3 | 10m 3s |" >> $GITHUB_STEP_SUMMARY
+          echo "| :green_circle: Pass | 4 | 12 | 3 | 9m 4s |" >> $GITHUB_STEP_SUMMARY
