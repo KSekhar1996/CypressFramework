@@ -1,4 +1,4 @@
-import { homePage } from "../pom/homePage";
+import { homePage } from "../pages/homePage";
 
 const homepage = new homePage();
 

@@ -1,4 +1,4 @@
-import { registerPage } from "../pom/registerPage";
+import { registerPage } from "../pages/registerPage";
 
 const register = new registerPage();
 
