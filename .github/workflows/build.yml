@@ -11,7 +11,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          browser: chrome
           command: npm run cypress:run
       
       - name: Cypress Test Report
@@ -19,4 +18,15 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Mochawesome HTML Report
-          path: cypress/reports/html 
+          path: cypress/reports/html
+
+      - name: Job Summary
+        if: always()
+        run: |
+          echo "### Cypress Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "#### Test Run Summary" >> $GITHUB_STEP_SUMMARY
+          echo "Total tests run: $(grep -o 'tests run' cypress/reports/html/index.html | awk '{print $3}')" >> $GITHUB_STEP_SUMMARY
+          echo "Total failures: $(grep -o 'failed' cypress/reports/html/index.html | awk '{print $3}')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### [View Full Cypress Report](cypress/reports/html/index.html)" >> $GITHUB_STEP_SUMMARY
+ 

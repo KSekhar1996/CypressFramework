@@ -7,7 +7,8 @@
     "cypress:run": "cypress run",
     "cypress:open": "cypress open",
     "cypress:smoke": "cypress run --env grepTags=@smoke --spec \"**/e2e/**/*\"",
-    "cypress:regression": "cypress run --env grepTags=@regression --spec \"**/e2e/**/*\""
+    "cypress:regression": "cypress run --env grepTags=@regression --spec \"**/e2e/**/*\"",
+    "cypress:browser_chrome": "cypress run --spec \"**/e2e/**/*\" --browser chrome"
   },
   "repository": {
     "type": "git",
